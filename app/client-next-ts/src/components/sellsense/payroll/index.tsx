@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { PayrollOverview } from './payroll-overview';
+import { EmployeeManagement } from './employee-management';
+import { PayrollProcessing } from './payroll-processing';
+import { PayrollHistory } from './payroll-history';
 
 type PayrollView = 'overview' | 'employees' | 'process' | 'history';
 
@@ -17,62 +20,11 @@ export function Payroll() {
       case 'overview':
         return <PayrollOverview onNavigate={handleNavigate} />;
       case 'employees':
-        return (
-          <div className="p-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Employee Management
-              </h2>
-              <p className="text-gray-500 mb-4">
-                Employee management component coming soon...
-              </p>
-              <button
-                onClick={() => setActiveView('overview')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Back to Overview
-              </button>
-            </div>
-          </div>
-        );
+        return <EmployeeManagement />;
       case 'process':
-        return (
-          <div className="p-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Process Payroll
-              </h2>
-              <p className="text-gray-500 mb-4">
-                Payroll processing component coming soon...
-              </p>
-              <button
-                onClick={() => setActiveView('overview')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Back to Overview
-              </button>
-            </div>
-          </div>
-        );
+        return <PayrollProcessing />;
       case 'history':
-        return (
-          <div className="p-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Payroll History
-              </h2>
-              <p className="text-gray-500 mb-4">
-                Payroll history component coming soon...
-              </p>
-              <button
-                onClick={() => setActiveView('overview')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Back to Overview
-              </button>
-            </div>
-          </div>
-        );
+        return <PayrollHistory />;
       default:
         return <PayrollOverview onNavigate={handleNavigate} />;
     }

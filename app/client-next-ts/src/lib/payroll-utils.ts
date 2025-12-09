@@ -454,3 +454,53 @@ export function calculateMTDPayroll(runs: PayrollRun[]): number {
     })
     .reduce((total, run) => total + run.totalAmount, 0);
 }
+
+/**
+ * Get employee status color classes (lowercase enum values)
+ */
+export function getEmployeeStatusColor(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'bg-green-100 text-green-800';
+    case 'on_leave':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'terminated':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+}
+
+/**
+ * Get employee status label (lowercase enum values)
+ */
+export function getEmployeeStatusLabel(status: string): string {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'Active';
+    case 'on_leave':
+      return 'On Leave';
+    case 'terminated':
+      return 'Terminated';
+    default:
+      return status;
+  }
+}
+
+/**
+ * Format payment frequency for display (lowercase enum values)
+ */
+export function formatPaymentFrequency(frequency: string): string {
+  switch (frequency.toLowerCase()) {
+    case 'weekly':
+      return 'Weekly';
+    case 'bi_weekly':
+      return 'Bi-Weekly';
+    case 'semi_monthly':
+      return 'Semi-Monthly';
+    case 'monthly':
+      return 'Monthly';
+    default:
+      return frequency;
+  }
+}
