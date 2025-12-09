@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, DollarSign, Users, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, DollarSign, Users, ChevronRight, CheckCircle, AlertCircle, Filter, X } from 'lucide-react';
 import type { PayrollRun } from '@/types/payroll';
 import { formatCurrency, formatDate, formatDateTime } from '@/lib/payroll-utils';
 
@@ -10,6 +10,8 @@ export function PayrollHistory() {
   const [selectedRun, setSelectedRun] = useState<PayrollRun | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dateRange, setDateRange] = useState({ start: '', end: '' });
+  const [statusFilter, setStatusFilter] = useState<string>('all');
 
   useEffect(() => {
     fetchPayrollHistory();
@@ -29,6 +31,36 @@ export function PayrollHistory() {
       setLoading(false);
     }
   };
+
+  // Filter payroll runs
+  const filteredRuns = payrollRuns.filter((run) => {
+    // Date filter
+    if (dateRange.start || dateRange.end) {
+      const runDate = new Date(run.paymentDate);
+      if (dateRange.start) {
+        const startDate = new Date(dateRange.start);
+        if (runDate < startDate) return false;
+      }
+      if (dateRange.end) {
+        const endDate = new Date(dateRange.end);
+        if (runDate > endDate) return false;
+      }
+    }
+
+    // Status filter
+    if (statusFilter !== 'all' && run.status.toLowerCase() !== statusFilter.toLowerCase()) {
+      return false;
+    }
+
+    return true;
+  });
+
+  const clearFilters = () => {
+    setDateRange({ start: '', end: '' });
+    setStatusFilter('all');
+  };
+
+  const hasActiveFilters = dateRange.start || dateRange.end || statusFilter !== 'all';
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -201,7 +233,83 @@ export function PayrollHistory() {
         <p className="text-gray-600 mt-1">View past payroll runs and payment details</p>
       </div>
 
-      {payrollRuns.length === 0 ? (
+      {/* Filters */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Filter className="h-5 w-5 text-gray-600" />
+          <h3 className="font-semibold text-gray-900">Filters</h3>
+          {hasActiveFilters && (
+            <button
+              onClick={clearFilters}
+              className="ml-auto text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+            >
+              <X className="h-4 w-4" />
+              Clear Filters
+            </button>
+          )}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Start Date
+            </label>
+            <input
+              type="date"
+              value={dateRange.start}
+              onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              End Date
+            </label>
+            <input
+              type="date"
+              value={dateRange.end}
+              onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Status
+            </label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="all">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="processing">Processing</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+        </div>
+        {hasActiveFilters && (
+          <div className="mt-3 text-sm text-gray-600">
+            Showing {filteredRuns.length} of {payrollRuns.length} payroll runs
+          </div>
+        )}
+      </div>
+
+      {filteredRuns.length === 0 && payrollRuns.length > 0 ? (
+        <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
+          <Filter className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Results Found</h3>
+          <p className="text-gray-600 mb-4">
+            No payroll runs match your current filters. Try adjusting your search criteria.
+          </p>
+          <button
+            onClick={clearFilters}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Clear Filters
+          </button>
+        </div>
+      ) : payrollRuns.length === 0 ? (
         <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
           <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No Payroll History</h3>
@@ -211,7 +319,7 @@ export function PayrollHistory() {
         </div>
       ) : (
         <div className="space-y-4">
-          {payrollRuns.map((run) => (
+          {filteredRuns.map((run) => (
             <div
               key={run.id}
               onClick={() => setSelectedRun(run)}
