@@ -1,0 +1,535 @@
+/**
+ * Mock Payroll Data
+ * 
+ * Sample data for the Owlban Group Payroll feature
+ */
+
+import {
+  EmployeeStatus,
+  PayrollStatus,
+  PaymentStatus,
+  PaymentFrequency,
+  EmploymentType,
+  type Employee,
+  type PayrollRun,
+  type PayrollSummary,
+} from '@/types/payroll';
+
+/**
+ * Mock Employees
+ */
+export const mockEmployees: Employee[] = [
+  {
+    id: 'emp-001',
+    employeeNumber: 'EMP202401001',
+    firstName: 'Sarah',
+    lastName: 'Johnson',
+    email: 'sarah.johnson@owlbangroup.com',
+    phone: '555-0101',
+    department: 'Engineering',
+    position: 'Senior Software Engineer',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2022-03-15',
+    salary: 120000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '1234567890',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Chase Bank',
+      accountHolderName: 'Sarah Johnson',
+    },
+    taxId: '***-**-1234',
+    address: {
+      street: '123 Main St',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10001',
+      country: 'US',
+    },
+    createdAt: '2022-03-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-002',
+    employeeNumber: 'EMP202401002',
+    firstName: 'Michael',
+    lastName: 'Chen',
+    email: 'michael.chen@owlbangroup.com',
+    phone: '555-0102',
+    department: 'Engineering',
+    position: 'Frontend Developer',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2023-01-10',
+    salary: 95000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '2345678901',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Chase Bank',
+      accountHolderName: 'Michael Chen',
+    },
+    taxId: '***-**-2345',
+    address: {
+      street: '456 Oak Ave',
+      city: 'Brooklyn',
+      state: 'NY',
+      zipCode: '11201',
+      country: 'US',
+    },
+    createdAt: '2023-01-10T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-003',
+    employeeNumber: 'EMP202401003',
+    firstName: 'Emily',
+    lastName: 'Rodriguez',
+    email: 'emily.rodriguez@owlbangroup.com',
+    phone: '555-0103',
+    department: 'Product',
+    position: 'Product Manager',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2021-06-01',
+    salary: 130000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '3456789012',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Bank of America',
+      accountHolderName: 'Emily Rodriguez',
+    },
+    taxId: '***-**-3456',
+    address: {
+      street: '789 Pine St',
+      city: 'Manhattan',
+      state: 'NY',
+      zipCode: '10002',
+      country: 'US',
+    },
+    createdAt: '2021-06-01T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-004',
+    employeeNumber: 'EMP202401004',
+    firstName: 'David',
+    lastName: 'Kim',
+    email: 'david.kim@owlbangroup.com',
+    phone: '555-0104',
+    department: 'Design',
+    position: 'UX Designer',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2022-09-20',
+    salary: 85000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '4567890123',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Wells Fargo',
+      accountHolderName: 'David Kim',
+    },
+    taxId: '***-**-4567',
+    address: {
+      street: '321 Elm St',
+      city: 'Queens',
+      state: 'NY',
+      zipCode: '11354',
+      country: 'US',
+    },
+    createdAt: '2022-09-20T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-005',
+    employeeNumber: 'EMP202401005',
+    firstName: 'Jessica',
+    lastName: 'Martinez',
+    email: 'jessica.martinez@owlbangroup.com',
+    phone: '555-0105',
+    department: 'Marketing',
+    position: 'Marketing Manager',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2020-11-15',
+    salary: 105000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '5678901234',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Citibank',
+      accountHolderName: 'Jessica Martinez',
+    },
+    taxId: '***-**-5678',
+    address: {
+      street: '654 Maple Ave',
+      city: 'Bronx',
+      state: 'NY',
+      zipCode: '10451',
+      country: 'US',
+    },
+    createdAt: '2020-11-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-006',
+    employeeNumber: 'EMP202401006',
+    firstName: 'Robert',
+    lastName: 'Taylor',
+    email: 'robert.taylor@owlbangroup.com',
+    phone: '555-0106',
+    department: 'Sales',
+    position: 'Sales Representative',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2023-04-01',
+    salary: 75000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '6789012345',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'TD Bank',
+      accountHolderName: 'Robert Taylor',
+    },
+    taxId: '***-**-6789',
+    address: {
+      street: '987 Cedar Ln',
+      city: 'Staten Island',
+      state: 'NY',
+      zipCode: '10301',
+      country: 'US',
+    },
+    createdAt: '2023-04-01T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-007',
+    employeeNumber: 'EMP202401007',
+    firstName: 'Amanda',
+    lastName: 'White',
+    email: 'amanda.white@owlbangroup.com',
+    phone: '555-0107',
+    department: 'Finance',
+    position: 'Financial Analyst',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2021-08-10',
+    salary: 90000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '7890123456',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Chase Bank',
+      accountHolderName: 'Amanda White',
+    },
+    taxId: '***-**-7890',
+    address: {
+      street: '147 Birch St',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10003',
+      country: 'US',
+    },
+    createdAt: '2021-08-10T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-008',
+    employeeNumber: 'EMP202401008',
+    firstName: 'James',
+    lastName: 'Anderson',
+    email: 'james.anderson@owlbangroup.com',
+    phone: '555-0108',
+    department: 'Engineering',
+    position: 'DevOps Engineer',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2022-05-15',
+    salary: 110000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '8901234567',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Bank of America',
+      accountHolderName: 'James Anderson',
+    },
+    taxId: '***-**-8901',
+    address: {
+      street: '258 Willow Dr',
+      city: 'Brooklyn',
+      state: 'NY',
+      zipCode: '11202',
+      country: 'US',
+    },
+    createdAt: '2022-05-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-009',
+    employeeNumber: 'EMP202401009',
+    firstName: 'Lisa',
+    lastName: 'Thompson',
+    email: 'lisa.thompson@owlbangroup.com',
+    phone: '555-0109',
+    department: 'HR',
+    position: 'HR Manager',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2020-02-01',
+    salary: 95000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '9012345678',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Wells Fargo',
+      accountHolderName: 'Lisa Thompson',
+    },
+    taxId: '***-**-9012',
+    address: {
+      street: '369 Spruce Ave',
+      city: 'Manhattan',
+      state: 'NY',
+      zipCode: '10004',
+      country: 'US',
+    },
+    createdAt: '2020-02-01T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-010',
+    employeeNumber: 'EMP202401010',
+    firstName: 'Christopher',
+    lastName: 'Garcia',
+    email: 'christopher.garcia@owlbangroup.com',
+    phone: '555-0110',
+    department: 'Engineering',
+    position: 'Backend Developer',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2023-07-01',
+    salary: 100000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '0123456789',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Citibank',
+      accountHolderName: 'Christopher Garcia',
+    },
+    taxId: '***-**-0123',
+    address: {
+      street: '741 Ash Blvd',
+      city: 'Queens',
+      state: 'NY',
+      zipCode: '11355',
+      country: 'US',
+    },
+    createdAt: '2023-07-01T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-011',
+    employeeNumber: 'EMP202401011',
+    firstName: 'Jennifer',
+    lastName: 'Lee',
+    email: 'jennifer.lee@owlbangroup.com',
+    phone: '555-0111',
+    department: 'Customer Support',
+    position: 'Support Specialist',
+    employmentType: EmploymentType.PART_TIME,
+    status: EmployeeStatus.ACTIVE,
+    hireDate: '2023-09-15',
+    salary: 45000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '1357924680',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'TD Bank',
+      accountHolderName: 'Jennifer Lee',
+    },
+    taxId: '***-**-1357',
+    address: {
+      street: '852 Poplar St',
+      city: 'Bronx',
+      state: 'NY',
+      zipCode: '10452',
+      country: 'US',
+    },
+    createdAt: '2023-09-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+  {
+    id: 'emp-012',
+    employeeNumber: 'EMP202401012',
+    firstName: 'Daniel',
+    lastName: 'Brown',
+    email: 'daniel.brown@owlbangroup.com',
+    phone: '555-0112',
+    department: 'Operations',
+    position: 'Operations Manager',
+    employmentType: EmploymentType.FULL_TIME,
+    status: EmployeeStatus.ON_LEAVE,
+    hireDate: '2021-03-20',
+    salary: 115000,
+    paymentFrequency: PaymentFrequency.BI_WEEKLY,
+    bankAccount: {
+      accountNumber: '2468013579',
+      routingNumber: '021000021',
+      accountType: 'CHECKING',
+      bankName: 'Chase Bank',
+      accountHolderName: 'Daniel Brown',
+    },
+    taxId: '***-**-2468',
+    address: {
+      street: '963 Hickory Ln',
+      city: 'Staten Island',
+      state: 'NY',
+      zipCode: '10302',
+      country: 'US',
+    },
+    createdAt: '2021-03-20T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+  },
+];
+
+/**
+ * Mock Payroll Runs
+ */
+export const mockPayrollRuns: PayrollRun[] = [
+  {
+    id: 'pr-001',
+    runNumber: 'PR20240115001',
+    status: PayrollStatus.COMPLETED,
+    payPeriodStart: '2024-01-01',
+    payPeriodEnd: '2024-01-15',
+    paymentDate: '2024-01-19',
+    totalEmployees: 10,
+    totalAmount: 72500,
+    totalGrossAmount: 96667,
+    totalDeductions: 24167,
+    totalNetAmount: 72500,
+    payments: [
+      {
+        id: 'payment-001-001',
+        employeeId: 'emp-001',
+        employeeName: 'Sarah Johnson',
+        amount: 3461.54,
+        grossAmount: 4615.38,
+        deductions: 1153.84,
+        netAmount: 3461.54,
+        status: PaymentStatus.COMPLETED,
+        transactionId: 'txn-001-001',
+        paymentMethod: 'ACH',
+        paymentDate: '2024-01-19',
+        processedAt: '2024-01-19T08:00:00Z',
+        metadata: {
+          period: 'Jan 1, 2024 - Jan 15, 2024',
+          deductionDetails: {
+            tax: 1153.85,
+            insurance: 138.46,
+            retirement: 92.31,
+            other: 0,
+          },
+        },
+      },
+      // Additional payment records would be here
+    ],
+    createdBy: 'admin@owlbangroup.com',
+    createdAt: '2024-01-18T10:00:00Z',
+    processedAt: '2024-01-19T08:00:00Z',
+    completedAt: '2024-01-19T12:00:00Z',
+    notes: 'Regular bi-weekly payroll',
+    metadata: {
+      successfulPayments: 10,
+      failedPayments: 0,
+      pendingPayments: 0,
+    },
+  },
+  {
+    id: 'pr-002',
+    runNumber: 'PR20240201001',
+    status: PayrollStatus.COMPLETED,
+    payPeriodStart: '2024-01-16',
+    payPeriodEnd: '2024-01-31',
+    paymentDate: '2024-02-02',
+    totalEmployees: 10,
+    totalAmount: 72500,
+    totalGrossAmount: 96667,
+    totalDeductions: 24167,
+    totalNetAmount: 72500,
+    payments: [],
+    createdBy: 'admin@owlbangroup.com',
+    createdAt: '2024-02-01T10:00:00Z',
+    processedAt: '2024-02-02T08:00:00Z',
+    completedAt: '2024-02-02T12:00:00Z',
+    notes: 'Regular bi-weekly payroll',
+    metadata: {
+      successfulPayments: 10,
+      failedPayments: 0,
+      pendingPayments: 0,
+    },
+  },
+];
+
+/**
+ * Mock Payroll Summary
+ */
+export const mockPayrollSummary: PayrollSummary = {
+  totalEmployees: 12,
+  activeEmployees: 11,
+  inactiveEmployees: 1,
+  nextPayrollDate: '2024-02-16',
+  lastPayrollDate: '2024-02-02',
+  lastPayrollAmount: 72500,
+  upcomingPayrollAmount: 75000,
+  monthToDatePayroll: 145000,
+  yearToDatePayroll: 290000,
+};
+
+/**
+ * Get all employees
+ */
+export function getAllEmployees(): Employee[] {
+  return [...mockEmployees];
+}
+
+/**
+ * Get employee by ID
+ */
+export function getEmployeeById(id: string): Employee | undefined {
+  return mockEmployees.find((emp) => emp.id === id);
+}
+
+/**
+ * Get all payroll runs
+ */
+export function getAllPayrollRuns(): PayrollRun[] {
+  return [...mockPayrollRuns];
+}
+
+/**
+ * Get payroll run by ID
+ */
+export function getPayrollRunById(id: string): PayrollRun | undefined {
+  return mockPayrollRuns.find((run) => run.id === id);
+}
+
+/**
+ * Get payroll summary
+ */
+export function getPayrollSummary(): PayrollSummary {
+  return { ...mockPayrollSummary };
+}

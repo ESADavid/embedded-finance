@@ -21,6 +21,7 @@ import { KycOnboarding } from './kyc-onboarding';
 import { WalletOverview } from './wallet-overview';
 import { TransactionHistory } from './transaction-history';
 import { PayoutSettings } from './payout-settings';
+import { Payroll } from './payroll';
 import { LoadingSkeleton } from './loading-skeleton';
 import { useSellSenseThemes, type ThemeOption } from './use-sellsense-themes';
 import {
@@ -44,6 +45,7 @@ export type View =
   | 'transactions'
   | 'linked-accounts'
   | 'payout'
+  | 'payroll'
   | 'catalog'
   | 'pricing'
   | 'orders'
@@ -390,6 +392,8 @@ export function DashboardLayout() {
         return <TransactionHistory />;
       case 'payout':
         return <PayoutSettings />;
+      case 'payroll':
+        return <Payroll />;
       case 'payments':
         return <MakePayment />;
       default:

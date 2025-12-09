@@ -22,6 +22,7 @@ const onboardingMenu = [{ key: 'onboarding' as View, label: 'Onboarding' }];
 const fullSidebarMenu = [
   { key: 'overview' as View, label: 'Home' },
   { key: 'wallet' as View, label: 'Wallet Management' },
+  { key: 'payroll' as View, label: 'Payroll' },
   { key: 'catalog' as View, label: 'Catalog' },
   { key: 'orders' as View, label: 'Orders' },
   { key: 'performance' as View, label: 'Performance' },
